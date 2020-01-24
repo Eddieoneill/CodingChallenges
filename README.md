@@ -1,5 +1,8 @@
 # CodingChallenges
 
+## Description
+Coding challenges that are not in leetcode
+
 ## Hungry Rabbit
 
 ```swift
