@@ -118,3 +118,48 @@ func maxVal(_ dict: [Int: [Int]]) -> Int {
     return Array(dict.keys).max() ?? 0
 }
 ```
+## deepestUniquePath
+
+```swift
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+func deepesetUniquVal(_ root: TreeNode?) -> Int {
+    guard root != nil else { return 0 }
+    var seenNum: Set<Int> = []
+    var sum = 1
+    var currentLevel = 0
+    var queue = [(TreeNode?, Int)]()
+    seenNum.insert(root?.val ?? 0)
+    queue.append((root?.left, 1))
+    queue.append((root?.right, 1))
+    
+    while !queue.isEmpty {
+        let node = queue.removeFirst()
+        checkNextPath(node.0, &seenNum, &sum, node.1, &currentLevel, &queue)
+    }
+    return sum
+}
+
+func checkNextPath(_ root: TreeNode?, _ seen: inout Set<Int>, _ sum: inout Int, _ level: Int, _ current: inout Int, _ queue: inout [(TreeNode?, Int)]) {
+    guard root != nil else { return }
+    
+    if !seen.contains(root?.val ?? 0) {
+        if current != level {
+            sum += 1
+            current += 1
+        }
+        seen.insert(root?.val ?? 0)
+        queue.append((root?.left, level + 1))
+        queue.append((root?.right, level + 1))
+    }
+}
+```
